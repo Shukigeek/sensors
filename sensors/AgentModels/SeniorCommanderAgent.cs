@@ -9,15 +9,18 @@ namespace sensors
     internal class SeniorCommanderAgent : Agent
     {
         //AgentType Type;
-        public List<Sensor> sensorSensitive;
-        public override List<Sensor> sensorsAttachet { set; get; }
-        
+        //public List<Sensor> sensorSensitive;
+        public override List<Sensor> sensorsAttached { set; get; }
 
 
-        public SeniorCommanderAgent(AgentType type) : base(type)
+
+        public SeniorCommanderAgent(AgentType type) : base(AgentType.Senior_Commander) { }
+       
+
+        public override void AttachSensor(Sensor sensor)
         {
-            //Type = type;
-            sensorSensitive = SensorService.GetSensorsSet(type);
+
+            sensorsAttached.Add(sensor);
 
         }
     }

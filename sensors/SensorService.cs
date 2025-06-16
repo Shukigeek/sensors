@@ -8,15 +8,16 @@ namespace sensors
 {
     internal static class SensorService
     {
+        public static Sensor Audio = new AudioSensor();
+        public static Sensor Thermal= new ThermalSensor();
+        public static Sensor Pulse = new PulseSensor();
+        public static Sensor Motion = new MotionSensor();
+        public static Sensor Magnetic = new Magnetic();
+        public static Sensor signal = new SignalSensor();
+        public static Sensor Light = new LightSensor();
         public static List<Sensor> sensors = new List<Sensor>()
         {
-            new AudioSensor(),
-            new ThermalSensor(),
-            new PulseSensor(),
-            new MotionSensor(),
-            new Magnetic(),
-            new SignalSensor(),
-            new LightSensor()
+            Audio,Thermal, Pulse, Motion, Magnetic,signal, Light
         };
         
         public static List<Sensor> GetSensorsSet(AgentType type)
@@ -45,7 +46,7 @@ namespace sensors
                 case AgentType.Organization_Leader:
                     return 8;
                 default:
-                    return 0;
+                    return 2;
             }
         }
         public static string PrintSensors()
