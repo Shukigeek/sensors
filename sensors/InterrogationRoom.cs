@@ -36,7 +36,7 @@ namespace sensors
             int numberOfSensors = agent.sensorSensitive.Count;
             Dictionary<Sensor, int> list = GetSensorsList(agent);
             Console.WriteLine("Interrogation start");
-            Console.WriteLine($"you have to find {numberOfSensors} \nsensor to activet on this agent");
+            Console.WriteLine($"you have to find {numberOfSensors} sensor to activet on this agent\n");
 
 
             while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
@@ -56,7 +56,7 @@ namespace sensors
                     if (list.ContainsKey(sens))
                     {
                         Console.Clear();
-                        Console.WriteLine($"nice goob one of the agent sensetive sesors is: {sens}");
+                        Console.WriteLine($"nice goob one of the agent sensetive sensors is: {sens.Name}");
                         agent.AttachSensor(sens);
                         list[sens]--;
                         if (list[sens] == 0)
@@ -66,9 +66,10 @@ namespace sensors
                     }
                     else
                     {
-                        Console.WriteLine($"worng choice the agent is not sensetive to {sens}");
+                        Console.Clear();
+                        Console.WriteLine($"worng choice the agent is not sensetive to {sens.Name}");
                     }
-                    Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}");
+                    Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}\n");
                 }
                 else
                 {

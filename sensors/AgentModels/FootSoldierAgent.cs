@@ -21,5 +21,6 @@ namespace sensors
             sensorsAttached.Add(sensor);
 
         }
+        public override List<Sensor> CounterattackBehavior(int counter) { return null; }
     }
 }

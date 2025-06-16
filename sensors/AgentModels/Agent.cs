@@ -30,6 +30,6 @@ namespace sensors
         }
 
         public abstract void AttachSensor(Sensor sensor);
-           
+        public abstract List<Sensor> CounterattackBehavior(int counter);
     }
 }

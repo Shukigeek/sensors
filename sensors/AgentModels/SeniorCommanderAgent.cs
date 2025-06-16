@@ -23,5 +23,29 @@ namespace sensors
             sensorsAttached.Add(sensor);
 
         }
+        public override List<Sensor> CounterattackBehavior(int counter)
+        {
+            if (counter % 3 == 0)
+            {
+                if (sensorsAttached == null || sensorsAttached.Count == 0)
+                    return null;
+                List<Sensor> sensorToReturn = new List<Sensor>();
+                Random random = new Random();
+                int index1 = random.Next(sensorsAttached.Count);
+                sensorToReturn.Add(sensorsAttached[index1]);
+                sensorsAttached.RemoveAt(index1);
+
+                if(sensorsAttached != null && sensorsAttached.Count > 0)
+                {
+                    int index2 = random.Next(sensorsAttached.Count);
+                    sensorToReturn.Add(sensorsAttached[index2]);
+                    sensorsAttached.RemoveAt(index2);
+                }
+
+                return sensorToReturn;
+
+            }
+            return null;
+        }
     }
 }
