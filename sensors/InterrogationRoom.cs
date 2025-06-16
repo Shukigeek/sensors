@@ -58,6 +58,14 @@ namespace sensors
                         Console.Clear();
                         Console.WriteLine($"nice goob one of the agent sensetive sensors is: {sens.Name}");
                         agent.AttachSensor(sens);
+                        if (sens is ThermalSensor thermalSensor)
+                        {
+                            Sensor reveal = thermalSensor.RevealsOneSecreatSensor(agent);
+                            if (reveal != null)
+                            {
+                                Console.WriteLine($"Hint: one of the remaining sensitive sensors is: {reveal.Name}");
+                            }
+                        }
                         list[sens]--;
                         if (list[sens] == 0)
                         {
@@ -74,6 +82,8 @@ namespace sensors
                 else
                 {
                     Console.WriteLine($"{sens.Name} is broken you could not use it any more");
+                    //agent.sensorsAttached.Remove(sens);
+                    
                     if (list.ContainsKey(sens))
                     {
                         Console.WriteLine("you lost!!");

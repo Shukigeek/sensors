@@ -8,7 +8,7 @@ namespace sensors
 {
     abstract class Sensor
     {
-        protected int ActivetionCount;
+        protected int ActivationCount;
         public bool IsBroken { get; protected set; } = false;
         //public Sensor()
         //{
@@ -17,26 +17,38 @@ namespace sensors
         public abstract string Name {get; }
 
         public abstract void Activate();
-        
+        //public abstract void RevealsOneSecreat();
+
+
     }
     class AudioSensor : Sensor
     {
         public override string Name => "Audio_Sensor";
         public override void Activate()
         {
-            ActivetionCount++;
-            Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
+            ActivationCount++;
+            Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
 
         }
     }
     class ThermalSensor : Sensor
     {
+        
         public override string Name => "Thermal_Sensor";
         public override void Activate()
         {
-            ActivetionCount++;
-            Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
+            ActivationCount++;
+            Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
 
+        }
+        public Sensor RevealsOneSecreatSensor(Agent agent)
+        {
+            Random rand = new Random();
+            var hidden = agent.sensorSensitive
+                         .Where(s => !agent.sensorsAttached.Contains(s))
+                         .ToList();
+            if(hidden.Count == 0 ) { return null;}
+            return hidden[rand.Next(hidden.Count)];
         }
     }
     class PulseSensor : Sensor
@@ -44,18 +56,27 @@ namespace sensors
         public override string Name => "Pulse_Sensor";
         public override void Activate()
         {
-            ActivetionCount++;
-            Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
+            ActivationCount++;
+            Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
+            if (ActivationCount >= 3)
+            {
+                IsBroken = true;
+            }
 
         }
+
     }
     class MotionSensor : Sensor
     {
         public override string Name => "Motion_Sensor";
         public override void Activate()
         {
-            ActivetionCount++;
-            Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
+            ActivationCount++;
+            Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
+            if (ActivationCount >= 3) 
+            {
+                IsBroken = true;
+            }
 
         }
     }
@@ -64,8 +85,8 @@ namespace sensors
         public override string Name => "Magnetic";
         public override void Activate()
         {
-            ActivetionCount++;
-            Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
+            ActivationCount++;
+            Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
 
         }
     }
@@ -74,8 +95,8 @@ namespace sensors
         public override string Name => "Signal_Sensor";
         public override void Activate()
         {
-            ActivetionCount++;
-            Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
+            ActivationCount++;
+            Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
 
         }
     }
@@ -84,8 +105,8 @@ namespace sensors
         public override string Name => "Light_Sensor";
         public override void Activate()
         {
-            ActivetionCount++;
-            Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
+            ActivationCount++;
+            Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
 
         }
     }
