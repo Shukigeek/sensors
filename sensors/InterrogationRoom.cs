@@ -47,7 +47,6 @@ namespace sensors
                 else
                 {
                     Console.WriteLine("worng choice");
-                    i--;
                 }
                 Console.WriteLine($"you found {i + 1} sensors out of {numberOfSensors}");
             }Console.WriteLine("congrats you matched all sensors");

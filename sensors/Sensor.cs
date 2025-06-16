@@ -13,7 +13,6 @@ namespace sensors
         {
             ActivetionCount = 0;
         }
-
         public abstract string Name {get; }
         public bool Activet()
         {
