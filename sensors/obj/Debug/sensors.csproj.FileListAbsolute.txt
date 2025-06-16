@@ -6,3 +6,11 @@ C:\Users\shuki\source\repos\sensors\sensors\obj\Debug\sensors.csproj.CoreCompile
 C:\Users\shuki\source\repos\sensors\sensors\obj\Debug\sensors.exe
 C:\Users\shuki\source\repos\sensors\sensors\obj\Debug\sensors.pdb
 C:\Users\shuki\source\repos\sensors\sensors\obj\Debug\sensors.exe.config
+C:\Users\shuki\Desktop\sensors\sensors\obj\Debug\sensors.csproj.AssemblyReference.cache
+C:\Users\shuki\Desktop\sensors\sensors\obj\Debug\sensors.exe.config
+C:\Users\shuki\Desktop\sensors\sensors\obj\Debug\sensors.csproj.CoreCompileInputs.cache
+C:\Users\shuki\Desktop\sensors\sensors\obj\Debug\sensors.exe
+C:\Users\shuki\Desktop\sensors\sensors\obj\Debug\sensors.pdb
+C:\Users\shuki\Desktop\sensors\sensors\bin\Debug\sensors.exe.config
+C:\Users\shuki\Desktop\sensors\sensors\bin\Debug\sensors.exe
+C:\Users\shuki\Desktop\sensors\sensors\bin\Debug\sensors.pdb

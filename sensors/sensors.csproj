@@ -43,12 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent.cs" />
-    <Compile Include="BasicSensor.cs" />
+    <Compile Include="AgentModels\Agent.cs" />
+    <Compile Include="AgentModels\FootSoldierAgent.cs" />
     <Compile Include="InterrogationRoom.cs" />
+    <Compile Include="AgentModels\OrganizationLeaderAgent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AgentModels\SeniorCommanderAgent.cs" />
     <Compile Include="Sensor.cs" />
+    <Compile Include="SensorService.cs" />
+    <Compile Include="AgentModels\SquadLeaderAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -14,6 +14,7 @@ namespace sensors
             ActivetionCount = 0;
         }
         public abstract string Name {get; }
+
         public bool Activet()
         {
             Console.WriteLine($"{Name} sensor activeted {ActivetionCount} times");
@@ -43,7 +44,7 @@ namespace sensors
     }
     class SignalSensor : Sensor
     {
-        public override string Name => "Signal+Sensor";
+        public override string Name => "Signal_Sensor";
     }
     class LightSensor : Sensor
     {
