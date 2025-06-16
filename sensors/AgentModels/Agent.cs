@@ -30,10 +30,6 @@ namespace sensors
         }
 
         public abstract void AttachSensor(Sensor sensor);
-        //{
-
-        //    sensorsAttached.Add(sensor);
            
-        //}
     }
 }
