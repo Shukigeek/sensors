@@ -22,10 +22,6 @@ namespace sensors
             return true;
         }
     }
-    class AudioSensor : Sensor
-    {
-        public override string Name => "Audio_Sensor";
-    }
     class ThermalSensor : Sensor
     {
         public override string Name => "Thermal_Sensor";

@@ -31,8 +31,5 @@ namespace sensors
         public void AttachSensor(Sensor sensor)
         {
 
-            sensorsAttached.Add(sensor);
-           
-        }
     }
 }
