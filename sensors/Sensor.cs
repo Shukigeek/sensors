@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Internal;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,30 @@ namespace sensors
 {
     abstract class Sensor
     {
-        protected int ActivationCount;
+        public int ActivationCount;
         public bool IsBroken { get; protected set; } = false;
-        //public Sensor()
-        //{
-        //    ActivetionCount = 0;
-        //}
+        public Sensor()
+        {
+            this.ActivationCount = 0;
+        }
         public abstract string Name {get; }
 
         public abstract void Activate();
-        //public abstract void RevealsOneSecreat();
+
+        //הפונקציה הזו והבאה אחריה זה כדי להשוות שני מופעים שונים של אותו המחלקה
+        public override bool Equals(object obj)
+        {
+            if (obj is Sensor other)
+            {
+                return this.Name == other.Name;
+            }
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+        
 
 
     }
@@ -37,8 +52,10 @@ namespace sensors
         public override string Name => "Thermal_Sensor";
         public override void Activate()
         {
+            
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
+            
 
         }
         public Sensor RevealsOneSecreatSensor(Agent agent)

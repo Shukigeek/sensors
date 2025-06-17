@@ -15,6 +15,11 @@ namespace sensors
         Agent SeniorCommander = new SeniorCommanderAgent(AgentType.Senior_Commander);
         Agent OrganizationLeader = new OrganizationLeaderAgent(AgentType.Organization_Leader);
 
+        private Agent LevelGame()
+        {
+
+        }
+
         public Dictionary<Sensor,int> GetSensorsList(Agent agent)
         {
             Dictionary<Sensor, int> list = new Dictionary<Sensor, int>();
@@ -33,58 +38,122 @@ namespace sensors
         public void interrogat()
         {
             Agent agent = FootSoldier;
-            int numberOfSensors = agent.sensorSensitive.Count;
-            Dictionary<Sensor, int> list = GetSensorsList(agent);
-            Console.WriteLine("Interrogation start");
-            Console.WriteLine($"you have to find {numberOfSensors} sensor to activet on this agent\n");
+            var agentSattings = InterrogationStart(agent);
+            Dictionary<Sensor,int> list = agentSattings.list;
+            int numberOfSensors = agentSattings.numberOfSensors;
 
 
             while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
             {
-                bool choiceValidtion = true;
-                Sensor sens = Menu();
-                if(sens != null ) choiceValidtion = false;
-                while (choiceValidtion)
-                {
-                    Console.WriteLine("enter number between 1-7 only");
-                    sens = Menu();
-                    if (sens != null) choiceValidtion = false;
-                }
-                sens.Activate();
-                if (!sens.IsBroken)
-                {
-                    if (list.ContainsKey(sens))
-                    {
-                        Console.Clear();
-                        Console.WriteLine($"nice goob one of the agent sensetive sensors is: {sens.Name}");
-                        agent.AttachSensor(sens);
-                        if (sens is ThermalSensor thermalSensor)
-                        {
-                            Sensor reveal = thermalSensor.RevealsOneSecreatSensor(agent);
-                            if (reveal != null)
-                            {
-                                Console.WriteLine($"Hint: one of the remaining sensitive sensors is: {reveal.Name}");
-                            }
-                        }
-                        list[sens]--;
-                        if (list[sens] == 0)
-                        {
-                            list.Remove(sens);
-                        }
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine($"worng choice the agent is not sensetive to {sens.Name}");
-                    }
-                    Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}\n");
-                    
-                if (agent.sensorsAttached != null && agent.sensorsAttached.Count == agent.sensorSensitive.Count)
-                {
-                    Console.WriteLine("congrats you matched all sensors");
-                }
-            }
+                //bool choiceValidtion = true;
+                //Sensor sens = Menu.ShowMenu();
+                //if(sens != null ) choiceValidtion = false;
+                //while (choiceValidtion)
+                //{
 
+                //    Console.WriteLine("enter number between 1-7 only");
+                //    sens = Menu.ShowMenu();
+                //    if (sens != null) choiceValidtion = false;
+                //}
 
+                Sensor sens = ChosseSensor(numberOfSensors);
+                ActivateAndRemoveBroken(agent, list);
+                ProcessChioce(agent,sens,list,numberOfSensors);
+               
             }
         }
+
+
+        private (Dictionary<Sensor,int> list,int numberOfSensors)  InterrogationStart(Agent agent)
+        {
+            
+            int numberOfSensors = agent.sensorSensitive.Count;
+            Dictionary<Sensor, int> list = GetSensorsList(agent);
+            Console.WriteLine("Interrogation start");
+            Console.WriteLine($"you have to find {numberOfSensors} sensor to activet on this agent\n");
+            return (list, numberOfSensors);
+        }
+
+        private Sensor ChosseSensor(int num)
+        {
+            Sensor chosenSensor = null;
+            while (chosenSensor == null)
+            {
+                Console.WriteLine($"Enter a number between 1-{num} to choose a sensor:");
+                chosenSensor = Menu.ShowMenu();
+                if (chosenSensor == null)
+                {
+                    Console.WriteLine("Invalid choice, please try again.");
+                }
+            }
+            return chosenSensor;
+        }
+
+        private void ActivateAndRemoveBroken(Agent agent,Dictionary<Sensor,int> list)
+        {
+            foreach (var sensor in agent.sensorsAttached.ToList())
+            {
+                sensor.Activate();
+                if (sensor.IsBroken)
+                {
+                    Console.WriteLine($"{sensor.Name} is broken you could not use it any more\n and it been removed from attached sensors");
+                    //Console.WriteLine($"[DEBUG] before removal: sensorsAttached count = {agent.sensorsAttached.Count}");
+                    agent.sensorsAttached.Remove(sensor);
+                    //Console.WriteLine($"[DEBUG] After removal: sensorsAttached count = {agent.sensorsAttached.Count}");
+                    string name = sensor.Name;
+                    foreach (Sensor type in SensorService.sensors)
+                    {
+                        if (type.Name == name)
+                        {
+                            if (list.ContainsKey(type))
+                            {
+                                list[type] += 1;
+                            }
+                            else
+                            {
+                                list.Add(type, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private void ProcessChioce(Agent agent,Sensor sens,Dictionary<Sensor,int> list,int numberOfSensors)
+        {
+            if (list.ContainsKey(sens))
+            {
+                //Console.Clear();
+                Console.WriteLine($"[DEBUG] Sensor instance hash: {sens.GetHashCode()}");
+                Console.WriteLine($"nice goob one of the agent sensetive sensors is: {sens.Name}");
+                agent.AttachSensor(sens);
+                if (sens is ThermalSensor thermalSensor)
+                {
+                    Sensor reveal = thermalSensor.RevealsOneSecreatSensor(agent);
+                    if (reveal != null)
+                    {
+                        Console.WriteLine($"Hint: one of the remaining sensitive sensors is: {reveal.Name}");
+                    }
+                }
+                list[sens]--;
+                if (list[sens] == 0)
+                {
+                    list.Remove(sens);
+                }
+            }
+            else
+            {
+                //Console.Clear();
+                Console.WriteLine($"[DEBUG] Sensor instance hash: {sens.GetHashCode()}");
+                Console.WriteLine($"worng choice the agent is not sensetive to {sens.Name}");
+            }
+            Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}\n");
+
+            if (agent.sensorsAttached != null && agent.sensorsAttached.Count == agent.sensorSensitive.Count)
+            {
+                Console.WriteLine("congrats you matched all sensors");
+            }
+        }
+
+
+    }
+}
