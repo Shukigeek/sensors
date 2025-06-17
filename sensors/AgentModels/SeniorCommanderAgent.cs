@@ -27,6 +27,14 @@ namespace sensors
         {
             if (counter % 3 == 0)
             {
+                 var magneticSensor = sensorsAttached.OfType<Magnetic>()
+                    .FirstOrDefault(s => s.CanBlockCounterAttack());
+                if (magneticSensor != null)
+                {
+                    magneticSensor.UseBlock();
+                    Console.WriteLine("magnetic sensor block one counterAttack");
+                    return null;
+                } 
                 if (sensorsAttached == null || sensorsAttached.Count == 0)
                     return null;
                 List<Sensor> sensorToReturn = new List<Sensor>();

@@ -2,17 +2,48 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace sensors
 {
+   
     internal class InterrogationRoom
     {
+        int level = 0;
+        public static Agent CreatNewFootSoldier() => new FootSoldierAgent(AgentType.Foot_Soldier);
+        public static Agent CreatNewSquadLeader() => new SquadLeaderAgent(AgentType.Squad_Leader);
+        public static Agent CreatNewSeniorCommander() => new SeniorCommanderAgent(AgentType.Senior_Commander);
+        public static Agent CreatNewOrganizationLeader() => new OrganizationLeaderAgent(AgentType.Organization_Leader);
 
-        private Agent LevelGame()
+        List<Func<Agent>> Agents = new List<Func<Agent>>()
         {
+            CreatNewFootSoldier,
+            CreatNewSquadLeader,
+            CreatNewSeniorCommander,
+            CreatNewOrganizationLeader,
+        };
+        private Agent LevelGame(bool Success)
+        {
+            if (Success)
+            {
+                level++;
+                if (level >= Agents.Count)
+                {
+                    Console.WriteLine("Congratulations! You finished the game.");
+                    return null;
+                }
+                Console.WriteLine($"You advanced to room number: {level + 1}");
+            }
+            else 
+            { 
+                Console.WriteLine($"you are in room number: {level + 1}"); 
+            }
+            return Agents[level]();
+        }
+
 
 
         public Dictionary<Sensor,int> GetSensorsList(Agent agent)
@@ -30,22 +61,51 @@ namespace sensors
                 }
             }return list;
         }
+        bool finishLevel = false;
         public void interrogat()
         {
-            Agent agent = FootSoldier;
-            var agentSattings = InterrogationStart(agent);
-            Dictionary<Sensor,int> list = agentSattings.list;
-            int numberOfSensors = agentSattings.numberOfSensors;
-
-
-            while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
+            
+            while (true)
             {
+                Agent agent = LevelGame(finishLevel);
+                finishLevel = false;
+                if (agent == null)
+                {
+                    break;
+                }
+                var agentSattings = InterrogationStart(agent);
+                Dictionary<Sensor, int> list = agentSattings.list;
+                int numberOfSensors = agentSattings.numberOfSensors;
 
-                Sensor sens = ChosseSensor(numberOfSensors);
-                ActivateAndRemoveBroken(agent, list);
-                ProcessChioce(agent,sens,list,numberOfSensors);
-               
+                int turn = 0;
+                while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
+                {
+                    turn++;    
+                    Sensor sens = ChosseSensor(numberOfSensors);
+                    ActivateAndRemoveBroken(agent, list);
+                    ProcessChioce(agent, sens, list, numberOfSensors);
+                    if (turn > 9) 
+                    {
+                        Console.WriteLine("turn limit execded");
+                        break; 
+                    }
+                }
+                
+                if (agent.sensorsAttached.Count == agent.sensorSensitive.Count)
+                {
+                    finishLevel = true;
+                }
+                Console.WriteLine("do you want to exit game?\nType (yes/no)");
+                string answer = Console.ReadLine();
+                if (answer == "yes")
+                {
+                    Console.WriteLine("Exiting the game...");
+                    break;
+                }
+                
+
             }
+        }
 
 
         private (Dictionary<Sensor,int> list,int numberOfSensors)  InterrogationStart(Agent agent)
@@ -67,6 +127,7 @@ namespace sensors
                 chosenSensor = Menu.ShowMenu();
                 if (chosenSensor == null)
                 {
+                    Console.Clear();
                     Console.WriteLine("Invalid choice, please try again.");
                 }
             }
@@ -100,12 +161,13 @@ namespace sensors
                 }
             }
         }
+        
         private void ProcessChioce(Agent agent,Sensor sens,Dictionary<Sensor,int> list,int numberOfSensors)
         {
             if (list.ContainsKey(sens))
             {
-                //Console.Clear();
-                Console.WriteLine($"[DEBUG] Sensor instance hash: {sens.GetHashCode()}");
+                Console.Clear();
+                
                 Console.WriteLine($"nice goob one of the agent sensetive sensors is: {sens.Name}");
                 agent.AttachSensor(sens);
                 if (sens is ThermalSensor thermalSensor)
@@ -116,6 +178,10 @@ namespace sensors
                         Console.WriteLine($"Hint: one of the remaining sensitive sensors is: {reveal.Name}");
                     }
                 }
+                if(sens is ISensorThatPrint s)
+                {
+                    s.Print();
+                }
                 list[sens]--;
                 if (list[sens] == 0)
                 {
@@ -124,8 +190,7 @@ namespace sensors
             }
             else
             {
-                //Console.Clear();
-                Console.WriteLine($"[DEBUG] Sensor instance hash: {sens.GetHashCode()}");
+                Console.Clear();
                 Console.WriteLine($"worng choice the agent is not sensetive to {sens.Name}");
             }
             Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}\n");
@@ -133,7 +198,9 @@ namespace sensors
             if (agent.sensorsAttached != null && agent.sensorsAttached.Count == agent.sensorSensitive.Count)
             {
                 Console.WriteLine("congrats you matched all sensors");
+                
             }
+            
         }
 
 

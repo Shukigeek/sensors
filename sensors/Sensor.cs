@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Deployment.Internal;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace sensors
 {
     abstract class Sensor
     {
+       
         public int ActivationCount;
         public bool IsBroken { get; protected set; } = false;
         public Sensor()
@@ -75,7 +77,7 @@ namespace sensors
         {
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
-            if (ActivationCount >= 3)
+            if (ActivationCount > 3)
             {
                 IsBroken = true;
             }
@@ -90,7 +92,7 @@ namespace sensors
         {
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
-            if (ActivationCount >= 3) 
+            if (ActivationCount > 3) 
             {
                 IsBroken = true;
             }
@@ -100,6 +102,19 @@ namespace sensors
     class Magnetic : Sensor
     {
         public override string Name => "Magnetic";
+        private int remainingBlocks = 2;
+
+        public bool CanBlockCounterAttack()
+        {
+            return remainingBlocks > 0;
+        }
+
+        public void UseBlock()
+        {
+            if (remainingBlocks > 0)
+                remainingBlocks--;
+        }
+
         public override void Activate()
         {
             ActivationCount++;
@@ -107,23 +122,43 @@ namespace sensors
 
         }
     }
-    class SignalSensor : Sensor
+    
+    class SignalSensor : Sensor,ISensorThatPrint
     {
+        Random random = new Random();
         public override string Name => "Signal_Sensor";
         public override void Activate()
         {
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
         }
+        public void Print()
+        {
+            Console.WriteLine($"this agent rank: {random.Next(10)}");
+        }
     }
-    class LightSensor : Sensor
+    class LightSensor : Sensor,ISensorThatPrint
     {
+        Random random = new Random();
+        List<string> terrorOrganizations = new List<string>
+        {
+            "Al-Qaeda",
+            "ISIS",
+            "Hezbollah",
+            "Hamas",
+            "Boko Haram",
+            "Taliban",
+            "Palestinian Islamic Jihad"
+        };
         public override string Name => "Light_Sensor";
         public override void Activate()
         {
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
-
+        }
+        public void Print() 
+        {
+            Console.WriteLine($"this agent is mamber in {terrorOrganizations[random.Next(terrorOrganizations.Count)]}");
         }
     }
 }

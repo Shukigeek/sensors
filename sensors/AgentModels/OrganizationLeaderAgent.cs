@@ -25,7 +25,9 @@ namespace sensors
         {
             if (counter % 3 == 0)
             {
-                if (sensorsAttached == null || sensorsAttached.Count == 0)
+                var magneticSensor = sensorsAttached.OfType<Magnetic>()
+                    .FirstOrDefault(s => s.CanBlockCounterAttack());
+                if (sensorsAttached == null || sensorsAttached.Count == 0 || magneticSensor != null) 
                     return null;
                 List<Sensor> sensorToReturn = new List<Sensor>();
                 Random random = new Random();
