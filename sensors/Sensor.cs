@@ -114,7 +114,6 @@ namespace sensors
         {
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
-
         }
     }
     class LightSensor : Sensor

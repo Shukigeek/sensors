@@ -10,15 +10,10 @@ namespace sensors
 {
     internal class InterrogationRoom
     {
-        Agent FootSoldier = new FootSoldierAgent(AgentType.Foot_Soldier);
-        Agent SquadLeader = new SquadLeaderAgent(AgentType.Squad_Leader);
-        Agent SeniorCommander = new SeniorCommanderAgent(AgentType.Senior_Commander);
-        Agent OrganizationLeader = new OrganizationLeaderAgent(AgentType.Organization_Leader);
 
         private Agent LevelGame()
         {
 
-        }
 
         public Dictionary<Sensor,int> GetSensorsList(Agent agent)
         {
@@ -45,23 +40,12 @@ namespace sensors
 
             while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
             {
-                //bool choiceValidtion = true;
-                //Sensor sens = Menu.ShowMenu();
-                //if(sens != null ) choiceValidtion = false;
-                //while (choiceValidtion)
-                //{
-
-                //    Console.WriteLine("enter number between 1-7 only");
-                //    sens = Menu.ShowMenu();
-                //    if (sens != null) choiceValidtion = false;
-                //}
 
                 Sensor sens = ChosseSensor(numberOfSensors);
                 ActivateAndRemoveBroken(agent, list);
                 ProcessChioce(agent,sens,list,numberOfSensors);
                
             }
-        }
 
 
         private (Dictionary<Sensor,int> list,int numberOfSensors)  InterrogationStart(Agent agent)
@@ -97,9 +81,7 @@ namespace sensors
                 if (sensor.IsBroken)
                 {
                     Console.WriteLine($"{sensor.Name} is broken you could not use it any more\n and it been removed from attached sensors");
-                    //Console.WriteLine($"[DEBUG] before removal: sensorsAttached count = {agent.sensorsAttached.Count}");
                     agent.sensorsAttached.Remove(sensor);
-                    //Console.WriteLine($"[DEBUG] After removal: sensorsAttached count = {agent.sensorsAttached.Count}");
                     string name = sensor.Name;
                     foreach (Sensor type in SensorService.sensors)
                     {
