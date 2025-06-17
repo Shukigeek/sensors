@@ -78,48 +78,13 @@ namespace sensors
                         Console.WriteLine($"worng choice the agent is not sensetive to {sens.Name}");
                     }
                     Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}\n");
-                }
-                else
-                {
-                    Console.WriteLine($"{sens.Name} is broken you could not use it any more");
-                    //agent.sensorsAttached.Remove(sens);
                     
-                    if (list.ContainsKey(sens))
-                    {
-                        Console.WriteLine("you lost!!");
-                        return;
-                    }
-                }
                 if (agent.sensorsAttached != null && agent.sensorsAttached.Count == agent.sensorSensitive.Count)
                 {
                     Console.WriteLine("congrats you matched all sensors");
                 }
             }
-        }
 
-        public Sensor Menu()
-        {
-            Console.WriteLine($"choose number sensor from list\n{SensorService.PrintSensors()}");
-            string choice = Console.ReadLine();
-            switch (choice) 
-            {
-                case "1":
-                    return SensorService.Audio;
-                case "2":
-                    return SensorService.Thermal;
-                case "3":
-                    return SensorService.Pulse;
-                case "4":
-                    return SensorService.Motion;
-                case "5":
-                    return SensorService.Magnetic;
-                case "6":
-                    return SensorService.signal;
-                case "7":
-                    return SensorService.Light;
-                default: return null;
 
             }
         }
-    }
-}
