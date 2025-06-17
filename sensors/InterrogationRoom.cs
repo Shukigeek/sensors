@@ -33,6 +33,9 @@ namespace sensors
                 if (level >= Agents.Count)
                 {
                     Console.WriteLine("Congratulations! You finished the game.");
+                    Console.Clear();
+                    FireWorks fireWorks = new FireWorks();
+                    
                     return null;
                 }
                 Console.WriteLine($"You advanced to room number: {level + 1}");
@@ -80,7 +83,24 @@ namespace sensors
                 int turn = 0;
                 while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
                 {
-                    turn++;    
+                    turn++;
+                    List<Sensor> addSensor = agent.CounterattackBehavior(turn);
+                    if (addSensor != null && addSensor.Count > 0)
+                    {
+                        for (int i = 0; i < addSensor.Count; i++)
+                        {
+                            if (list.ContainsKey(addSensor[i]))
+                            {
+                                list[addSensor[i]]++;
+                                Console.WriteLine("come on!!");
+                            }
+                            else
+                            {
+                                list[addSensor[i]] = 1;
+                                Console.WriteLine("boy");
+                            }
+                        }
+                    }
                     Sensor sens = ChosseSensor(numberOfSensors);
                     ActivateAndRemoveBroken(agent, list);
                     ProcessChioce(agent, sens, list, numberOfSensors);
@@ -127,7 +147,7 @@ namespace sensors
                 chosenSensor = Menu.ShowMenu();
                 if (chosenSensor == null)
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Console.WriteLine("Invalid choice, please try again.");
                 }
             }
@@ -166,7 +186,7 @@ namespace sensors
         {
             if (list.ContainsKey(sens))
             {
-                Console.Clear();
+                //Console.Clear();
                 
                 Console.WriteLine($"nice goob one of the agent sensetive sensors is: {sens.Name}");
                 agent.AttachSensor(sens);
@@ -190,7 +210,7 @@ namespace sensors
             }
             else
             {
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine($"worng choice the agent is not sensetive to {sens.Name}");
             }
             Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}\n");
