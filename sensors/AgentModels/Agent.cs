@@ -17,6 +17,8 @@ namespace sensors
     abstract class Agent
     {
         AgentType Type;
+        public int Rank;
+        public string Organization;
         public List<Sensor> sensorSensitive { get; set; }
         public abstract List<Sensor> sensorsAttached { set; get; }
 

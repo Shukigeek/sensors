@@ -101,7 +101,7 @@ namespace sensors
                             }
                         }
                     }
-                    Sensor sens = ChosseSensor(numberOfSensors);
+                    Sensor sens = ChosseSensor();
                     ActivateAndRemoveBroken(agent, list);
                     ProcessChioce(agent, sens, list, numberOfSensors);
                     if (turn > 9) 
@@ -138,12 +138,12 @@ namespace sensors
             return (list, numberOfSensors);
         }
 
-        private Sensor ChosseSensor(int num)
+        private Sensor ChosseSensor()
         {
             Sensor chosenSensor = null;
             while (chosenSensor == null)
             {
-                Console.WriteLine($"Enter a number between 1-{num} to choose a sensor:");
+                Console.WriteLine($"Enter a number between 1-7 to choose a sensor:");
                 chosenSensor = Menu.ShowMenu();
                 if (chosenSensor == null)
                 {
@@ -200,7 +200,7 @@ namespace sensors
                 }
                 if(sens is ISensorThatPrint s)
                 {
-                    s.Print();
+                    s.Print(agent);
                 }
                 list[sens]--;
                 if (list[sens] == 0)

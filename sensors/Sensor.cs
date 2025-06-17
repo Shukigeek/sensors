@@ -125,40 +125,30 @@ namespace sensors
     
     class SignalSensor : Sensor,ISensorThatPrint
     {
-        Random random = new Random();
+        
         public override string Name => "Signal_Sensor";
         public override void Activate()
         {
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
         }
-        public void Print()
+        public void Print(Agent agent)
         {
-            Console.WriteLine($"this agent rank: {random.Next(10)}");
+            Console.WriteLine($"this agent rank: {agent.Rank}");
         }
     }
     class LightSensor : Sensor,ISensorThatPrint
     {
-        Random random = new Random();
-        List<string> terrorOrganizations = new List<string>
-        {
-            "Al-Qaeda",
-            "ISIS",
-            "Hezbollah",
-            "Hamas",
-            "Boko Haram",
-            "Taliban",
-            "Palestinian Islamic Jihad"
-        };
+       
         public override string Name => "Light_Sensor";
         public override void Activate()
         {
             ActivationCount++;
             Console.WriteLine($"{Name} sensor activeted {ActivationCount} times");
         }
-        public void Print() 
+        public void Print(Agent agent) 
         {
-            Console.WriteLine($"this agent is mamber in {terrorOrganizations[random.Next(terrorOrganizations.Count)]}");
+            Console.WriteLine($"this agent is mamber in {agent.Organization}");
         }
     }
 }

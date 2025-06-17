@@ -8,6 +8,6 @@ namespace sensors
 {
     interface ISensorThatPrint
     {
-        void Print();
+        void Print(Agent agent);
     }
 }

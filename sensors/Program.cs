@@ -11,8 +11,8 @@ namespace sensors
     {
         static void Main(string[] args)
         {
-            //InterrogationRoom room = new InterrogationRoom();
-            //room.interrogat();
+            InterrogationRoom room = new InterrogationRoom();
+            room.interrogat();
             //FireWorks fireWorks = new FireWorks();
             
             VictoryShimmerEffect();
@@ -22,14 +22,14 @@ namespace sensors
 
             void VictoryShimmerEffect()
             {
-                string victoryMessage = "🎉 YOU WIN! 🎉";
+                string victoryMessage = "~~ YOU WIN! ~~";
                 ConsoleColor[] colors = new ConsoleColor[]
                 {
-            ConsoleColor.Yellow,
-            ConsoleColor.Green,
-            ConsoleColor.Cyan,
-            ConsoleColor.Magenta,
-            ConsoleColor.White
+                ConsoleColor.Yellow,
+                ConsoleColor.Green,
+                ConsoleColor.Cyan,
+                ConsoleColor.Magenta,
+                ConsoleColor.White
                 };
 
                 for (int i = 0; i < 10; i++)

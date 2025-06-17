@@ -1,4 +1,5 @@
-﻿using System;
+﻿using sensors.AgentModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,15 @@ namespace sensors
     {
         public override List<Sensor> sensorsAttached { set; get; }
 
+        public int Rank;
+        public string Organization;
+        Random random = new Random();
 
-
-        public SquadLeaderAgent(AgentType type) : base(AgentType.Squad_Leader) { }
+        public SquadLeaderAgent(AgentType type) : base(AgentType.Squad_Leader) 
+        {
+            Rank = random.Next(1, 10);
+            Organization = GetAffiltion.Affiletion();
+        }
 
 
         public override void AttachSensor(Sensor sensor)
