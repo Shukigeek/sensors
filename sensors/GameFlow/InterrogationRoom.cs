@@ -96,7 +96,6 @@ namespace sensors
                 int score = InterrogateAgent(agent);
                 TebaleModel model = secorPerRoom.SecorRoom(name,agent, score);
 
-
                 if (AskToExit.Exit())
                 {
                     player.InsertRow(model);
@@ -106,9 +105,6 @@ namespace sensors
                     bestScore.GetBestScore(name);
                     break;
                 }
-                
-                
-
             }
         }
 

@@ -20,7 +20,6 @@ namespace sensors.GameFlow
 
         public int? GameStart(string name)
         {
-            
             var roomNumber = player.RecognizePlayer(name);
             if (roomNumber != null)
             {
