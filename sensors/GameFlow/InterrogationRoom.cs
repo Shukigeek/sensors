@@ -47,8 +47,6 @@ namespace sensors
             return Agents[level]();
         }
 
-
-
         public Dictionary<Sensor,int> GetSensorsList(Agent agent)
         {
             Dictionary<Sensor, int> list = new Dictionary<Sensor, int>();
@@ -109,19 +107,7 @@ namespace sensors
                         Console.WriteLine("turn limit execded");
                         break; 
                     }
-                }
                 
-                if (agent.sensorsAttached.Count == agent.sensorSensitive.Count)
-                {
-                    finishLevel = true;
-                }
-                Console.WriteLine("do you want to exit game?\nType (yes/no)");
-                string answer = Console.ReadLine();
-                if (answer == "yes")
-                {
-                    Console.WriteLine("Exiting the game...");
-                    break;
-                }
                 
 
             }

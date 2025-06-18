@@ -10,8 +10,6 @@ namespace sensors
 {
     internal class SeniorCommanderAgent : Agent
     {
-        public int Rank;
-        public string Organization;
         Random random = new Random();
         public override List<Sensor> sensorsAttached { set; get; }
 
