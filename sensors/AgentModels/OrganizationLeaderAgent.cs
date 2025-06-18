@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using sensors.Sensors;
 
 namespace sensors
 {
@@ -29,8 +30,7 @@ namespace sensors
         }
         public override List<Sensor> CounterattackBehavior(int counter)
         {
-            Console.WriteLine($"[DEBUG] CounterattackBehavior called on turn {counter}");
-            Thread.Sleep(300);
+           
             if (counter % 3 == 0)
             {
                 

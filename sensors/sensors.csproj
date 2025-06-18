@@ -46,17 +46,24 @@
     <Compile Include="AgentModels\Agent.cs" />
     <Compile Include="AgentModels\FootSoldierAgent.cs" />
     <Compile Include="AgentModels\GetAffiltion.cs" />
-    <Compile Include="FireWorks.cs" />
-    <Compile Include="InterrogationRoom.cs" />
+    <Compile Include="GameFlow\FireWorks.cs" />
+    <Compile Include="GameFlow\InterrogationRoom.cs" />
     <Compile Include="AgentModels\OrganizationLeaderAgent.cs" />
-    <Compile Include="ISensorThatPrint.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Sensors\AudioSensor.cs" />
+    <Compile Include="Sensors\ISensorThatPrint.cs" />
+    <Compile Include="GameFlow\Menu.cs" />
+    <Compile Include="GameFlow\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AgentModels\SeniorCommanderAgent.cs" />
-    <Compile Include="Sensor.cs" />
-    <Compile Include="SensorService.cs" />
+    <Compile Include="Sensors\LightSensor.cs" />
+    <Compile Include="Sensors\Magnetic.cs" />
+    <Compile Include="Sensors\MotionSensor.cs" />
+    <Compile Include="Sensors\PulseSensor.cs" />
+    <Compile Include="Sensors\Sensor.cs" />
+    <Compile Include="Sensors\SensorService.cs" />
     <Compile Include="AgentModels\SquadLeaderAgent.cs" />
+    <Compile Include="Sensors\SignalSensor.cs" />
+    <Compile Include="Sensors\ThermalSensor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
