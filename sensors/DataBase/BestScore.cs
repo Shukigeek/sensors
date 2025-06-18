@@ -41,5 +41,28 @@ namespace sensors.DataBase
                 Console.WriteLine($"Error faching best score: {ex.Message}");
             }
         }
+        public void GetCurrentScore(string name)
+        {
+            string query = "SELECT Total_Score FROM GameScore ORDER BY ID DESC LIMIT 1;";
+            MySqlDataReader reader = null;
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(query, dal.openConnction()))
+                {
+                    using (reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            Console.WriteLine($"\n{name} you current score is: {reader["Total_Score"]}\n");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while faching current score: {ex.Message}");
+            }
+
+        }
     }
 }

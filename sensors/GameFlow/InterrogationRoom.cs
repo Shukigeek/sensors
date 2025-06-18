@@ -37,6 +37,7 @@ namespace sensors
                 level++;
                 if (level >= Agents.Count)
                 {
+                    bestScore.GetCurrentScore(name);
                     bestScore.GetBestScore(name);
                     Console.WriteLine("Congratulations! You finished the game.");
                     Console.Clear();
@@ -100,7 +101,8 @@ namespace sensors
                 {
                     player.InsertRow(model);
                     Console.WriteLine("Exiting the game...");
-                    
+
+                    bestScore.GetCurrentScore(name);
                     bestScore.GetBestScore(name);
                     break;
                 }
