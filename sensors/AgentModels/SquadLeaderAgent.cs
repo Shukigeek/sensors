@@ -33,8 +33,6 @@ namespace sensors
         {
             if (counter % 3 == 0)
             {
-                Console.WriteLine($"[DEBUG] CounterattackBehavior called on turn {counter}");
-                Thread.Sleep(300);
                 var magneticSensor = sensorsAttached.OfType<Magnetic>()
                     .FirstOrDefault(s => s.CanBlockCounterAttack());
                 if (sensorsAttached == null || sensorsAttached.Count == 0)
