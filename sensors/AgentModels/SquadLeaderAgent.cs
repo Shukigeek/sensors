@@ -12,9 +12,6 @@ namespace sensors
     internal class SquadLeaderAgent : Agent
     {
         public override List<Sensor> sensorsAttached { set; get; }
-
-        public int Rank;
-        public string Organization;
         Random random = new Random();
 
         public SquadLeaderAgent(AgentType type) : base(AgentType.Squad_Leader) 

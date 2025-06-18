@@ -10,8 +10,6 @@ namespace sensors
     internal class FootSoldierAgent : Agent
     {
         public override List<Sensor> sensorsAttached { set; get; }
-        public int Rank;
-        public string Organization;
         Random random = new Random();
         
 
