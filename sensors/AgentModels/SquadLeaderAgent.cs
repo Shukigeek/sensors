@@ -38,7 +38,7 @@ namespace sensors
                 if (magneticSensor != null)
                 {
                     magneticSensor.UseBlock();
-                    Console.WriteLine("magnetic sensor block one counterAttack");
+                    Console.WriteLine("magnetic sensor block one counterAttack\n");
                     return null;
 
                 }
@@ -47,7 +47,7 @@ namespace sensors
                 int index = random.Next(sensorsAttached.Count);
                 sensorToReturn.Add(sensorsAttached[index]);
                 sensorsAttached.RemoveAt(index);
-                Console.WriteLine("agent counter attack and unattached 1 sensor");
+                Console.WriteLine("agent counter attack and unattached 1 sensor\n");
                 return sensorToReturn;
             }
             return null;

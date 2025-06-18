@@ -21,11 +21,12 @@ namespace sensors.GameFlow
         public int? GameStart(string name)
         {
             var roomNumber = player.RecognizePlayer(name);
+            
             if (roomNumber != null)
             {
                 Console.WriteLine($"welcome back {name}!\n" +
                     $"choose from 1-2\n" +
-                    $"1: continue from room number: {roomNumber}\n" +
+                    $"1: continue from room number: {roomNumber+1}\n" +
                     $"2: start new game");
                 string choice = Console.ReadLine();
                 Console.WriteLine();

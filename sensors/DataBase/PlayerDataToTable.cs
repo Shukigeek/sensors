@@ -47,13 +47,14 @@ namespace sensors.DataBase
                     {
                         if (reader.Read())
                         {
-                            object[] rooms = new object[4];
-                            reader.GetValues(rooms);
-                            for (int i = 0; i < rooms.Length; i++)
+                            
+                            for (int i = 0; i < 4; i++)
                             {
-                                if (rooms[i] == DBNull.Value)
+                                int roomScore = reader.GetInt32(i);
+                                if (roomScore == 0)
                                 {
-                                    return i + 1;
+                                    
+                                    return i;
                                 }
                             }
                         }
