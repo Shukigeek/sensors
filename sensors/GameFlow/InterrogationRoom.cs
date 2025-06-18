@@ -16,13 +16,8 @@ namespace sensors
     internal class InterrogationRoom
     {
         BestScore bestScore = new BestScore();
-        int level = 0;
-        public static Agent CreatNewFootSoldier() => new FootSoldierAgent(AgentType.Foot_Soldier);
-        public static Agent CreatNewSquadLeader() => new SquadLeaderAgent(AgentType.Squad_Leader);
-        public static Agent CreatNewSeniorCommander() => new SeniorCommanderAgent(AgentType.Senior_Commander);
-        public static Agent CreatNewOrganizationLeader() => new OrganizationLeaderAgent(AgentType.Organization_Leader);
-
-        List<Func<Agent>> Agents = new List<Func<Agent>>()
+        bool finishLevel = false;
+        public Dictionary<Sensor, int> GetSensorsList(Agent agent)
         {
             Dictionary<Sensor, int> list = new Dictionary<Sensor, int>();
             foreach (var senstype in agent.sensorSensitive)
@@ -35,9 +30,12 @@ namespace sensors
                 {
                     list[senstype]++;
                 }
+            }
+            return list;
         }
+
         public (Dictionary<Sensor,int> list,int numberOfSensors)  InterrogationStart(Agent agent)
-            {
+        {
             
             int numberOfSensors = agent.sensorSensitive.Count;
             Dictionary<Sensor, int> list = GetSensorsList(agent);
@@ -46,7 +44,7 @@ namespace sensors
             return (list, numberOfSensors);
         }
 
-        private Sensor ChosseSensor()
+        public Sensor ChosseSensor()
         {
             Sensor chosenSensor = null;
             while (chosenSensor == null)
@@ -62,7 +60,7 @@ namespace sensors
             return chosenSensor;
         }
 
-        private void ActivateAndRemoveBroken(Agent agent,Dictionary<Sensor,int> list)
+        public void ActivateAndRemoveBroken(Agent agent,Dictionary<Sensor,int> list)
         {
             foreach (var sensor in agent.sensorsAttached.ToList())
             {
@@ -90,10 +88,10 @@ namespace sensors
             }
         }
         
-        private void ProcessChioce(Agent agent,Sensor sens,Dictionary<Sensor,int> list,int numberOfSensors)
+        public void ProcessChioce(Agent agent,Sensor sens,Dictionary<Sensor,int> list,int numberOfSensors)
         {
             if (list.ContainsKey(sens))
-            {
+            {             
                 Console.WriteLine($"\nnice goob one of the agent sensetive sensors is: {sens.Name}");
                 agent.AttachSensor(sens);
                 if (sens is ThermalSensor thermalSensor)
@@ -128,7 +126,7 @@ namespace sensors
             }
             
         }
-        private int InterrogateAgent(Agent agent)
+        public int InterrogateAgent(Agent agent)
         {
             var agentSattings = InterrogationStart(agent);
             Dictionary<Sensor, int> list = agentSattings.list;
