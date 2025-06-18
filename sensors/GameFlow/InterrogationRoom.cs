@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using sensors.GameFlow;
 using sensors.Sensors;
 namespace sensors
 {
@@ -74,39 +75,13 @@ namespace sensors
                 {
                     break;
                 }
-                var agentSattings = InterrogationStart(agent);
-                Dictionary<Sensor, int> list = agentSattings.list;
-                int numberOfSensors = agentSattings.numberOfSensors;
+                InterrogateAgent(agent);
 
-                int turn = 0;
-                while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
+                if (AskToExit.Exit())
                 {
-                    turn++;
-                    List<Sensor> addSensor = agent.CounterattackBehavior(turn);
-                    if (addSensor != null && addSensor.Count > 0)
-                    {
-                        for (int i = 0; i < addSensor.Count; i++)
-                        {
-                            if (list.ContainsKey(addSensor[i]))
-                            {
-                                list[addSensor[i]]++;
-                                Console.WriteLine("come on!!");
-                            }
-                            else
-                            {
-                                list[addSensor[i]] = 1;
-                                Console.WriteLine("boy");
-                            }
-                        }
-                    }
-                    Sensor sens = ChosseSensor();
-                    ActivateAndRemoveBroken(agent, list);
-                    ProcessChioce(agent, sens, list, numberOfSensors);
-                    if (turn > 9) 
-                    {
-                        Console.WriteLine("turn limit execded");
-                        break; 
-                    }
+                    Console.WriteLine("Exiting the game...");
+                    break;
+                }
                 
                 
 
@@ -133,7 +108,7 @@ namespace sensors
                 chosenSensor = Menu.ShowMenu();
                 if (chosenSensor == null)
                 {
-                    //Console.Clear();
+                    
                     Console.WriteLine("Invalid choice, please try again.");
                 }
             }
@@ -208,7 +183,48 @@ namespace sensors
             }
             
         }
+        private void InterrogateAgent(Agent agent)
+        {
+            var agentSattings = InterrogationStart(agent);
+            Dictionary<Sensor, int> list = agentSattings.list;
+            int numberOfSensors = agentSattings.numberOfSensors;
 
+            int turn = 0;
+            while (agent.sensorsAttached == null || agent.sensorsAttached.Count < agent.sensorSensitive.Count)
+            {
+                turn++;
+                List<Sensor> addSensor = agent.CounterattackBehavior(turn);
+                if (addSensor != null && addSensor.Count > 0)
+                {
+                    for (int i = 0; i < addSensor.Count; i++)
+                    {
+                        if (list.ContainsKey(addSensor[i]))
+                        {
+                            list[addSensor[i]]++;
+
+                        }
+                        else
+                        {
+                            list[addSensor[i]] = 1;
+
+                        }
+                    }
+                }
+                Sensor sens = ChosseSensor();
+                ActivateAndRemoveBroken(agent, list);
+                ProcessChioce(agent, sens, list, numberOfSensors);
+                if (turn > 9)
+                {
+                    Console.WriteLine("turn limit execded");
+                    break;
+                }
+            }
+
+            if (agent.sensorsAttached.Count == agent.sensorSensitive.Count)
+            {
+                finishLevel = true;
+            }
+        }
 
     }
 }

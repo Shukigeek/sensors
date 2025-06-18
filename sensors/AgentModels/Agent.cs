@@ -25,6 +25,7 @@ namespace sensors
 
         protected Agent(AgentType type)
         {
+            
             Type = type;
             sensorsAttached = new List<Sensor>();
             sensorSensitive = SensorService.GetSensorsSet(type);

@@ -46,6 +46,7 @@
     <Compile Include="AgentModels\Agent.cs" />
     <Compile Include="AgentModels\FootSoldierAgent.cs" />
     <Compile Include="AgentModels\GetAffiltion.cs" />
+    <Compile Include="GameFlow\AskToExit.cs" />
     <Compile Include="GameFlow\FireWorks.cs" />
     <Compile Include="GameFlow\InterrogationRoom.cs" />
     <Compile Include="AgentModels\OrganizationLeaderAgent.cs" />
