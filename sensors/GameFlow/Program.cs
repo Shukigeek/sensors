@@ -1,4 +1,5 @@
-﻿using System;
+﻿using sensors.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,11 @@ namespace sensors
         {
             InterrogationRoom room = new InterrogationRoom();
             room.interrogat();
-            
-            }
-        }
+            //CreatTable creatTable = new CreatTable();
+            //creatTable.CreatNewTable();
 
+        }
     }
+
+}
 

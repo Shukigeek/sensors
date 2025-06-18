@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using sensors.DataBase;
 using sensors.GameFlow;
 using sensors.Sensors;
 namespace sensors
@@ -13,6 +15,8 @@ namespace sensors
    
     internal class InterrogationRoom
     {
+        BestScore bestScore = new BestScore();
+        PlayerDataToTable player = new PlayerDataToTable();
         int level = 0;
         public static Agent CreatNewFootSoldier() => new FootSoldierAgent(AgentType.Foot_Soldier);
         public static Agent CreatNewSquadLeader() => new SquadLeaderAgent(AgentType.Squad_Leader);
@@ -26,13 +30,14 @@ namespace sensors
             CreatNewSeniorCommander,
             CreatNewOrganizationLeader,
         };
-        private Agent LevelGame(bool Success)
+        private Agent LevelGame(bool Success,string name)
         {
             if (Success)
             {
                 level++;
                 if (level >= Agents.Count)
                 {
+                    bestScore.GetBestScore(name);
                     Console.WriteLine("Congratulations! You finished the game.");
                     Console.Clear();
                     FireWorks fireWorks = new FireWorks();
@@ -67,19 +72,36 @@ namespace sensors
         public void interrogat()
         {
             
+            SecorPerRoom secorPerRoom = new SecorPerRoom(); 
+            StartGame game = new StartGame();
+
+            string name = game.EnterName();
+            int? level = game.GameStart(name);
+            if (level != null)
+            {
+                for(int i = 0; i < level.Value; i++)
+                {
+                    LevelGame(true,name);
+                }
+            }
             while (true)
             {
-                Agent agent = LevelGame(finishLevel);
+                Agent agent = LevelGame(finishLevel,name);
                 finishLevel = false;
                 if (agent == null)
                 {
                     break;
                 }
-                InterrogateAgent(agent);
+                int score = InterrogateAgent(agent);
+                TebaleModel model = secorPerRoom.SecorRoom(name,agent, score);
+
 
                 if (AskToExit.Exit())
                 {
+                    player.InsertRow(model);
                     Console.WriteLine("Exiting the game...");
+                    
+                    bestScore.GetBestScore(name);
                     break;
                 }
                 
@@ -94,7 +116,7 @@ namespace sensors
             
             int numberOfSensors = agent.sensorSensitive.Count;
             Dictionary<Sensor, int> list = GetSensorsList(agent);
-            Console.WriteLine("Interrogation start");
+            Console.WriteLine("\nInterrogation start");
             Console.WriteLine($"you have to find {numberOfSensors} sensor to activet on this agent\n");
             return (list, numberOfSensors);
         }
@@ -149,7 +171,7 @@ namespace sensors
             {
                 //Console.Clear();
                 
-                Console.WriteLine($"nice goob one of the agent sensetive sensors is: {sens.Name}");
+                Console.WriteLine($"\nnice goob one of the agent sensetive sensors is: {sens.Name}");
                 agent.AttachSensor(sens);
                 if (sens is ThermalSensor thermalSensor)
                 {
@@ -172,7 +194,7 @@ namespace sensors
             else
             {
                 //Console.Clear();
-                Console.WriteLine($"worng choice the agent is not sensetive to {sens.Name}");
+                Console.WriteLine($"\nworng choice the agent is not sensetive to {sens.Name}");
             }
             Console.WriteLine($"you found {agent.sensorsAttached.Count} sensors out of {numberOfSensors}\n");
 
@@ -183,7 +205,7 @@ namespace sensors
             }
             
         }
-        private void InterrogateAgent(Agent agent)
+        private int InterrogateAgent(Agent agent)
         {
             var agentSattings = InterrogationStart(agent);
             Dictionary<Sensor, int> list = agentSattings.list;
@@ -222,8 +244,12 @@ namespace sensors
 
             if (agent.sensorsAttached.Count == agent.sensorSensitive.Count)
             {
+                CalcoletScore calc = new CalcoletScore();
+                int score = calc.Score(agent, turn);
                 finishLevel = true;
+                return score;
             }
+            return 0;
         }
 
     }
