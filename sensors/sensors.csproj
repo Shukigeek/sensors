@@ -106,8 +106,10 @@
     <Compile Include="GameFlow\AskToExit.cs" />
     <Compile Include="GameFlow\CalcoletScore.cs" />
     <Compile Include="GameFlow\FireWorks.cs" />
+    <Compile Include="GameFlow\GameManger.cs" />
     <Compile Include="GameFlow\InterrogationRoom.cs" />
     <Compile Include="AgentModels\OrganizationLeaderAgent.cs" />
+    <Compile Include="GameFlow\LevelManger.cs" />
     <Compile Include="GameFlow\SecorPerRoom.cs" />
     <Compile Include="GameFlow\StartGame.cs" />
     <Compile Include="Sensors\AudioSensor.cs" />

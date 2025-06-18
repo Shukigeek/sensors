@@ -42,6 +42,7 @@ namespace sensors
 
             Random rand = new Random();
 
+
             for (int explosion = 0; explosion < 10; explosion++)
             {
                 int posX = rand.Next(10, width - 10);
@@ -49,7 +50,7 @@ namespace sensors
 
                 for (int frame = 0; frame < fireworks.Length; frame++)
                 {
-                    Console.Clear();
+                    
 
                     Console.ForegroundColor = colors[frame % colors.Length];
 

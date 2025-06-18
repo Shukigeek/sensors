@@ -1,4 +1,5 @@
 ﻿using sensors.DataBase;
+using sensors.GameFlow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace sensors
     {
         static void Main(string[] args)
         {
-            InterrogationRoom room = new InterrogationRoom();
+            GameManger room = new GameManger();
             room.interrogat();
             //CreatTable creatTable = new CreatTable();
             //creatTable.CreatNewTable();
